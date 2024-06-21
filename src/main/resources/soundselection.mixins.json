@@ -1,0 +1,20 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.github.telvarost.soundselection.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+  ],
+  "server": [
+  ],
+  "client": [
+    "GameOptionsMixin",
+    "MainMenuMixin",
+    "MinecraftMixin",
+    "PauseMixin",
+    "SoundHelperMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

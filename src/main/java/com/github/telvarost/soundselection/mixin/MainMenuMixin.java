@@ -1,0 +1,41 @@
+package com.github.telvarost.soundselection.mixin;
+
+import com.github.telvarost.soundselection.GuiButtonCustom;
+import com.github.telvarost.soundselection.GuiSoundPacks;
+import com.github.telvarost.soundselection.ModHelper;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screen.TitleScreen;
+import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.client.resource.language.I18n;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+@Environment(value= EnvType.CLIENT)
+@Mixin(TitleScreen.class)
+public class MainMenuMixin extends Screen {
+
+    public MainMenuMixin() { }
+
+    @Inject(method = "init", at = @At("HEAD"), cancellable = true)
+    public void init_head(CallbackInfo ci) {
+        ModHelper.loadSoundPack();
+    }
+
+    @Inject(method = "init", at = @At("RETURN"), cancellable = true)
+    public void init_return(CallbackInfo ci) {
+        int i = this.height / 4 + 48;
+        buttons.add(new GuiButtonCustom(5, width / 2 - 124, i + 48, 20, 20, I18n.getTranslation(""), true, 2));
+    }
+
+    @Inject(method = "buttonClicked", at = @At("RETURN"), cancellable = true)
+    protected void buttonClicked(ButtonWidget arg, CallbackInfo ci) {
+        if (arg.id == 5)
+        {
+            this.minecraft.setScreen(new GuiSoundPacks(this));
+        }
+    }
+}

@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "soundselection",
+  "version": "${version}",
+
+  "name": "SoundSelection",
+  "description": "This mod adds custom sound loading capabilities to the game. Special thanks to Spring Spring for the sound icon and to NFC team for the pack list GUI.",
+  "authors": [
+    "Telvarost",
+    "Vivian",
+    "Birevan",
+    "Roadhog360",
+    "icanttellyou"
+  ],
+  "contact": {
+    "issues": "https://github.com/telvarost/SoundSelection-StationAPI/issues",
+    "homepage": "https://github.com/telvarost/SoundSelection-StationAPI/",
+    "sources": "https://github.com/telvarost/SoundSelection-StationAPI/"
+  },
+
+  "license": "MIT",
+  "icon": "assets/soundselection/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "stationapi:event_bus": [
+    ],
+    "stationapi:event_bus_client": [
+    ],
+    "stationapi:event_bus_server": [
+    ]
+  },
+  "mixins": [
+    "soundselection.mixins.json"
+  ],
+
+  "depends": {
+    "minecraft": "1.0.0-beta.7.3"
+  }
+}
