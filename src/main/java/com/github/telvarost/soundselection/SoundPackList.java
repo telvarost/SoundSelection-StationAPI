@@ -1,18 +1,18 @@
 package com.github.telvarost.soundselection;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import blue.endless.jankson.Jankson;
+import blue.endless.jankson.JsonElement;
+import blue.endless.jankson.JsonObject;
+import blue.endless.jankson.api.SyntaxError;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.class_564;
 import net.minecraft.client.Minecraft;
@@ -89,53 +89,43 @@ public class SoundPackList
         ArrayList<String> arraylist = new ArrayList<String>();
         selectedSoundPack = ModHelper.ModHelperFields.soundPack;
 
-        if (soundPackDir.exists() && soundPackDir.isDirectory())
-        {
-            File afile[] = soundPackDir.listFiles();
-            File afile1[] = new File[afile.length + defaultSoundPacks.length];
-            for(int i = 0; i < afile.length + defaultSoundPacks.length; i++) {
-                afile1[i] = i < afile.length ? afile[i] : new File((SoundPackList.class).getResource("/assets/soundselection/lang/" + defaultSoundPacks[i - afile.length] + ".lang").getFile());
-            }
-            int i = afile1.length;
+        if (soundPackDir.exists() && soundPackDir.isDirectory()) {
+//            File afile[] = soundPackDir.listFiles();
+//            File afile1[] = new File[afile.length + defaultSoundPacks.length];
+//            for (int i = 0; i < afile.length + defaultSoundPacks.length; i++) {
+//                afile1[i] = i < afile.length ? afile[i] : new File((SoundPackList.class).getResource("/assets/soundselection/lang/" + defaultSoundPacks[i - afile.length] + ".lang").getFile());
+//            }
+//            int i = afile1.length;
 
-            titleAndAuthorMap.clear();
-            for (int j = 0; j < i; j++)
-            {
-                File file = afile1[j];
-                if(file == null) continue;
+            String description = "";
 
-                if (file.getName().toLowerCase().endsWith(".lang"))
-                {
-                    try
-                    {
-                        InputStream in;
-                        if(file.isFile()) {
-                            in = new FileInputStream(file);
-                        } else {
-                            in = (SoundPackList.class).getResourceAsStream("/assets/soundselection/lang/" + file.getName());
-                        }
-                        BufferedReader reader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
-                        String title = reader.readLine();
-                        String author = reader.readLine();
-                        reader.close();
-                        boolean hasHeading = title.contains("title|") && author.contains("author|");
-                        if(hasHeading) {
-                            title = title.replace("title|", "");
-                            author = author.replace("author|", "");
-                        } else {
-                            System.out.println("File " + file.getName() + " is missing a title and/or author, or isn't a valid lang file.");
-                            continue;
-                        }
-                        arraylist.add(file.getName().replace(".lang", ""));
-                        titleAndAuthorMap.put(file.getName().replace(".lang", ""), new String[] {title, author});
-                    }
-                    catch (IOException ioexception)
-                    {
-                        ioexception.printStackTrace();
+            try {
+                JsonObject packObject = Jankson
+                        .builder()
+                        .build()
+                        .load(new File("resources", "pack.mcmeta"));
+
+                System.out.println("Parsing");
+                if (null != packObject.getObject("pack")) {
+                    JsonElement jsonElement = packObject.getObject("pack").getOrDefault("description", new JsonObject());
+                    System.out.println(jsonElement.toString());
+                    if (2 <= jsonElement.toString().length()) {
+                        description = jsonElement.toString().substring(1, jsonElement.toString().length() - 1);
                     }
                 }
+            } catch (IOException ex) {
+                System.out.println("Couldn't read the config file" + ex.toString());
+            } catch (SyntaxError error) {
+                System.out.println("Couldn't read the config file" + error.getMessage());
+                System.out.println(error.getLineMessage());
             }
+
+
+            titleAndAuthorMap.clear();
+            arraylist.add("Filename");
+            titleAndAuthorMap.put("Filename", new String[]{"Default", description});
         }
+
 
         if (!arraylist.contains(selectedSoundPack))
         {
