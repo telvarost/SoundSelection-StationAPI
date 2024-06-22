@@ -122,8 +122,8 @@ public class SoundPackList
 
 
             titleAndAuthorMap.clear();
-            arraylist.add("Filename");
-            titleAndAuthorMap.put("Filename", new String[]{"Default", description});
+            arraylist.add("test.zip");
+            titleAndAuthorMap.put("test.zip", new String[]{"Default", description});
         }
 
 

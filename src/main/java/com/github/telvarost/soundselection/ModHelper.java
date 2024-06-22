@@ -16,6 +16,7 @@ public class ModHelper {
         File soundPackDir = new File(Minecraft.getRunDirectory(), "soundpacks");
 
         File resourceSoundPackDir = new File(resourcesString);
+        deleteDirectory(resourceSoundPackDir);
         if (!resourceSoundPackDir.exists()) {
             resourceSoundPackDir.mkdirs();
         }
@@ -24,6 +25,7 @@ public class ModHelper {
         if (resourceSoundPackFile.exists()) {
             resourceSoundPackFile.delete();
         }
+
 
         try {
             resourceSoundPackFile.createNewFile();
@@ -45,50 +47,49 @@ public class ModHelper {
                     "Ta,\n" +
                     "Dinnerbone of Mojang");
             myWriter.close();
+
+
+
+            unzip( Paths.get(soundPackDir.getPath(), ModHelperFields.soundPack).toString()
+                 , Paths.get(Minecraft.getRunDirectory().getPath(), resourcesString).toString()
+                 );
         } catch (IOException ex) {
             System.out.println("Failed to make resource warning file letting users know resources-soundpack is not a directory that users should modify the contents of");
         }
 
-        unzip( Paths.get(soundPackDir.getPath(), ModHelperFields.soundPack).toString()
-             , Paths.get(Minecraft.getRunDirectory().getPath(), resourcesString).toString()
-             );
-
         ModHelperFields.reloadingSounds = false;
     }
 
-    private static void unzip(String zipFilePath, String destDir) {
-        File dir = new File(destDir);
-        // create output directory if it doesn't exist
-        if(!dir.exists()) dir.mkdirs();
-        FileInputStream fis;
-        //buffer for read and write data to file
-        byte[] buffer = new byte[1024];
-        try {
-            fis = new FileInputStream(zipFilePath);
-            ZipInputStream zis = new ZipInputStream(fis);
-            ZipEntry ze = zis.getNextEntry();
-            while(ze != null){
-                String fileName = ze.getName();
-                File newFile = new File(destDir + File.separator + fileName);
-                System.out.println("Unzipping to "+newFile.getAbsolutePath());
-                //create directories for sub directories in zip
-                new File(newFile.getParent()).mkdirs();
-                FileOutputStream fos = new FileOutputStream(newFile);
-                int len;
-                while ((len = zis.read(buffer)) > 0) {
-                    fos.write(buffer, 0, len);
-                }
-                fos.close();
-                //close this ZipEntry
-                zis.closeEntry();
-                ze = zis.getNextEntry();
+    private static boolean deleteDirectory(File directoryToBeDeleted) {
+        File[] allContents = directoryToBeDeleted.listFiles();
+        if (allContents != null) {
+            for (File file : allContents) {
+                deleteDirectory(file);
             }
-            //close last ZipEntry
-            zis.closeEntry();
-            zis.close();
-            fis.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        }
+        return directoryToBeDeleted.delete();
+    }
+
+
+    // Method to unzip files
+    public static void unzip(String zipFile, String destFolder) throws IOException {
+        try (ZipInputStream zis = new ZipInputStream(new FileInputStream(zipFile))) {
+            ZipEntry entry;
+            byte[] buffer = new byte[1024];
+            while ((entry = zis.getNextEntry()) != null) {
+                File newFile = new File(destFolder + File.separator + entry.getName());
+                if (entry.isDirectory()) {
+                    newFile.mkdirs();
+                } else {
+                    new File(newFile.getParent()).mkdirs();
+                    try (FileOutputStream fos = new FileOutputStream(newFile)) {
+                        int length;
+                        while ((length = zis.read(buffer)) > 0) {
+                            fos.write(buffer, 0, length);
+                        }
+                    }
+                }
+            }
         }
     }
 
