@@ -3,6 +3,7 @@ package com.github.telvarost.soundselection;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -24,7 +25,6 @@ public class SoundPackList
     /** The list of the available texture packs. */
     private List<String> availableSoundPacks;
     private Map<String, String[]> titleAndAuthorMap = new HashMap<String, String[]>();
-    private String defaultSoundPacks[] = new String[] {"en_US"};
 
     /** The TexturePack that will be used. */
     public String selectedSoundPack;
@@ -90,12 +90,8 @@ public class SoundPackList
         selectedSoundPack = ModHelper.ModHelperFields.soundPack;
 
         if (soundPackDir.exists() && soundPackDir.isDirectory()) {
-//            File afile[] = soundPackDir.listFiles();
-//            File afile1[] = new File[afile.length + defaultSoundPacks.length];
-//            for (int i = 0; i < afile.length + defaultSoundPacks.length; i++) {
-//                afile1[i] = i < afile.length ? afile[i] : new File((SoundPackList.class).getResource("/assets/soundselection/lang/" + defaultSoundPacks[i - afile.length] + ".lang").getFile());
-//            }
-//            int i = afile1.length;
+            File afile[] = soundPackDir.listFiles();
+            File afile1[] = new File[afile.length + 1];
 
             String description = "";
 
@@ -124,6 +120,7 @@ public class SoundPackList
             titleAndAuthorMap.clear();
             arraylist.add("test.zip");
             titleAndAuthorMap.put("test.zip", new String[]{"Default", description});
+            ModHelper.readZip(Paths.get(soundPackDir.getPath(), "test.zip").toString());
         }
 
 

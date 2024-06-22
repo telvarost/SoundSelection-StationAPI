@@ -4,7 +4,9 @@ import net.minecraft.client.Minecraft;
 
 import java.io.*;
 import java.nio.file.Paths;
+import java.util.Enumeration;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 
 public class ModHelper {
@@ -58,6 +60,30 @@ public class ModHelper {
         }
 
         ModHelperFields.reloadingSounds = false;
+    }
+
+    public static void readZip(String zipFilePath) {
+        System.out.println("Hey whats the idea");
+        try {
+            ZipFile zipFile = new ZipFile(zipFilePath);
+
+            Enumeration<? extends ZipEntry> entries = zipFile.entries();
+
+            while (entries.hasMoreElements()) {
+                ZipEntry entry = entries.nextElement();
+                String name = entry.getName();
+                long compressedSize = entry.getCompressedSize();
+                long normalSize = entry.getSize();
+                String type = entry.isDirectory() ? "DIR" : "FILE";
+
+                System.out.println(name);
+                System.out.format("\t %s - %d - %d\n", type, compressedSize, normalSize);
+            }
+
+            zipFile.close();
+        } catch (IOException ex) {
+            System.err.println(ex);
+        }
     }
 
     private static boolean deleteDirectory(File directoryToBeDeleted) {
