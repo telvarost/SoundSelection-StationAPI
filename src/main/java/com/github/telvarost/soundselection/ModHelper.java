@@ -5,6 +5,7 @@ import net.minecraft.client.Minecraft;
 import java.io.*;
 import java.nio.file.Paths;
 import java.util.Enumeration;
+import java.util.Scanner;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
@@ -74,10 +75,18 @@ public class ModHelper {
                 String name = entry.getName();
                 long compressedSize = entry.getCompressedSize();
                 long normalSize = entry.getSize();
-                String type = entry.isDirectory() ? "DIR" : "FILE";
+                if (!entry.isDirectory() && name.contains(".mcmeta")) {
+                    try (InputStream inputStream = zipFile.getInputStream(entry);
+                         Scanner scanner = new Scanner(inputStream);) {
 
-                System.out.println(name);
-                System.out.format("\t %s - %d - %d\n", type, compressedSize, normalSize);
+                        while (scanner.hasNextLine()) {
+                            String line = scanner.nextLine();
+                            System.out.println(line);
+                        }
+                    }
+                    System.out.println(name);
+                    System.out.format("\t %d - %d\n", compressedSize, normalSize);
+                }
             }
 
             zipFile.close();
