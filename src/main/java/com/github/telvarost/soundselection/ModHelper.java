@@ -67,7 +67,8 @@ public class ModHelper {
         ModHelperFields.reloadingSounds = false;
     }
 
-    public static void readZip(String zipFilePath) {
+    public static String readZip(String zipFilePath) {
+        String returnVal = "";
         System.out.println("Hey whats the idea");
         try {
             ZipFile zipFile = new ZipFile(zipFilePath);
@@ -103,8 +104,7 @@ public class ModHelper {
                             JsonElement jsonElement = packObject.getObject("pack").getOrDefault("description", new JsonObject());
                             System.out.println(jsonElement.toString());
                             if (2 <= jsonElement.toString().length()) {
-                                String description = jsonElement.toString().substring(1, jsonElement.toString().length() - 1);
-                                System.out.println("From JSON: " + description);
+                                returnVal = jsonElement.toString().substring(1, jsonElement.toString().length() - 1);
                             }
                         }
                     } catch (IOException ex) {
@@ -120,6 +120,8 @@ public class ModHelper {
         } catch (IOException ex) {
             System.err.println(ex);
         }
+
+        return returnVal;
     }
 
     private static boolean deleteDirectory(File directoryToBeDeleted) {

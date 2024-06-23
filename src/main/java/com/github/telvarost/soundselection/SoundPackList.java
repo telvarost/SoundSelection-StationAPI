@@ -121,7 +121,9 @@ public class SoundPackList
             File afile[] = soundPackDir.listFiles();
             for (int fileIndex = 0; fileIndex < afile.length; fileIndex++) {
                 if (afile[fileIndex].getName().contains(".zip")) {
-                    ModHelper.readZip(Paths.get(soundPackDir.getPath(), afile[fileIndex].getName()).toString());
+                    description = ModHelper.readZip(Paths.get(soundPackDir.getPath(), afile[fileIndex].getName()).toString());
+                    arraylist.add("Pack" + fileIndex);
+                    titleAndAuthorMap.put("Pack" + fileIndex, new String[]{"Pack" + fileIndex, description});
                 }
             }
         }
