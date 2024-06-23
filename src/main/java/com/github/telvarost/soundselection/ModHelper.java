@@ -1,5 +1,9 @@
 package com.github.telvarost.soundselection;
 
+import blue.endless.jankson.Jankson;
+import blue.endless.jankson.JsonElement;
+import blue.endless.jankson.JsonObject;
+import blue.endless.jankson.api.SyntaxError;
 import net.minecraft.client.Minecraft;
 
 import java.io.*;
@@ -76,16 +80,39 @@ public class ModHelper {
                 long compressedSize = entry.getCompressedSize();
                 long normalSize = entry.getSize();
                 if (!entry.isDirectory() && name.contains(".mcmeta")) {
-                    try (InputStream inputStream = zipFile.getInputStream(entry);
-                         Scanner scanner = new Scanner(inputStream);) {
-
-                        while (scanner.hasNextLine()) {
-                            String line = scanner.nextLine();
-                            System.out.println(line);
-                        }
-                    }
+//                    try (;
+//                         Scanner scanner = new Scanner(inputStream);) {
+//
+//                        while (scanner.hasNextLine()) {
+//                            String line = scanner.nextLine();
+//                            System.out.println(line);
+//                        }
+//                    }
                     System.out.println(name);
                     System.out.format("\t %d - %d\n", compressedSize, normalSize);
+
+
+                    try {
+                        JsonObject packObject = Jankson
+                                .builder()
+                                .build()
+                                .load(zipFile.getInputStream(entry));
+
+                        System.out.println("Parsing");
+                        if (null != packObject.getObject("pack")) {
+                            JsonElement jsonElement = packObject.getObject("pack").getOrDefault("description", new JsonObject());
+                            System.out.println(jsonElement.toString());
+                            if (2 <= jsonElement.toString().length()) {
+                                String description = jsonElement.toString().substring(1, jsonElement.toString().length() - 1);
+                                System.out.println("From JSON: " + description);
+                            }
+                        }
+                    } catch (IOException ex) {
+                        System.out.println("Couldn't read the config file" + ex.toString());
+                    } catch (SyntaxError error) {
+                        System.out.println("Couldn't read the config file" + error.getMessage());
+                        System.out.println(error.getLineMessage());
+                    }
                 }
             }
 

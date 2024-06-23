@@ -53,7 +53,7 @@ public class SoundPackList
         {
             soundPackDir.mkdirs();
         }
-        updateAvailableSoundPacks();
+        //updateAvailableSoundPacks();
     }
 
     /**
@@ -90,8 +90,6 @@ public class SoundPackList
         selectedSoundPack = ModHelper.ModHelperFields.soundPack;
 
         if (soundPackDir.exists() && soundPackDir.isDirectory()) {
-            File afile[] = soundPackDir.listFiles();
-            File afile1[] = new File[afile.length + 1];
 
             String description = "";
 
@@ -116,11 +114,16 @@ public class SoundPackList
                 System.out.println(error.getLineMessage());
             }
 
-
             titleAndAuthorMap.clear();
-            arraylist.add("test.zip");
-            titleAndAuthorMap.put("test.zip", new String[]{"Default", description});
-            ModHelper.readZip(Paths.get(soundPackDir.getPath(), "test.zip").toString());
+            arraylist.add("Default");
+            titleAndAuthorMap.put("Default", new String[]{"Default", description});
+
+            File afile[] = soundPackDir.listFiles();
+            for (int fileIndex = 0; fileIndex < afile.length; fileIndex++) {
+                if (afile[fileIndex].getName().contains(".zip")) {
+                    ModHelper.readZip(Paths.get(soundPackDir.getPath(), afile[fileIndex].getName()).toString());
+                }
+            }
         }
 
 
