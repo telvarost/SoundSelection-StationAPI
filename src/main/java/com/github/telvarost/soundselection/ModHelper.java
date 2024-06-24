@@ -9,17 +9,59 @@ import net.minecraft.client.Minecraft;
 import java.io.*;
 import java.nio.file.Paths;
 import java.util.Enumeration;
-import java.util.Scanner;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 
 public class ModHelper {
 
+    private static boolean starting = true;
+
     private static final String resourcesString = "resources-soundpack";
 
     public static void loadSoundPack() {
         ModHelperFields.reloadingSounds = true;
+
+
+        System.out.println("Loading sound pack files...");
+        File settings = new File("options.txt");
+        if(starting) {
+            if(!settings.exists())
+            {
+                if(ModHelperFields.soundPack == null || !ModHelper.ModHelperFields.soundPack.equals("")) {
+                    ModHelper.ModHelperFields.soundPack = "";
+                    System.err.println("Had trouble finding options.txt, using default sounds instead.");
+                }
+            } else {
+                try {
+                    BufferedReader bufferedreader = new BufferedReader(new FileReader(settings));
+                    boolean closed = false;
+                    for(String s = ""; (s = bufferedreader.readLine()) != null;)
+                    {
+                        System.out.println(s);
+                        String as[] = s.split(":");
+                        if (1 < as.length) {
+                            if(as[0].equals("soundPack"))
+                            {
+                                ModHelper.ModHelperFields.soundPack = as[1];
+                                bufferedreader.close();
+                                closed = true;
+                                break;
+                            }
+                        }
+                    }
+                    if(!closed) {
+                        ModHelperFields.soundPack = "";
+                        bufferedreader.close();
+                        System.out.println("\"soundPack:\" option is missing from options.txt. It will be created on the next save.");
+                    }
+                } catch(IOException ioexception) {
+                    ioexception.printStackTrace();
+                }
+            }
+        }
+        starting = false;
+
         File soundPackDir = new File(Minecraft.getRunDirectory(), "soundpacks");
 
         File resourceSoundPackDir = new File(resourcesString);
@@ -29,10 +71,6 @@ public class ModHelper {
         }
 
         File resourceSoundPackFile = new File(Paths.get(resourcesString, "READ_ME_I_AM_VERY_IMPORTANT").toString());
-        if (resourceSoundPackFile.exists()) {
-            resourceSoundPackFile.delete();
-        }
-
 
         try {
             resourceSoundPackFile.createNewFile();
@@ -54,14 +92,18 @@ public class ModHelper {
                     "Ta,\n" +
                     "Dinnerbone of Mojang");
             myWriter.close();
-
-
-
-            unzip( Paths.get(soundPackDir.getPath(), ModHelperFields.soundPack).toString()
-                 , Paths.get(Minecraft.getRunDirectory().getPath(), resourcesString).toString()
-                 );
         } catch (IOException ex) {
             System.out.println("Failed to make resource warning file letting users know resources-soundpack is not a directory that users should modify the contents of");
+        }
+
+        try {
+            if (!ModHelperFields.soundPack.equals("")) {
+                unzip( Paths.get(soundPackDir.getPath(), ModHelperFields.soundPack + ".zip").toString()
+                     , Paths.get(Minecraft.getRunDirectory().getPath(), resourcesString).toString()
+                     );
+            }
+        } catch (IOException ex) {
+            System.out.println("Failed to copy sounds");
         }
 
         ModHelperFields.reloadingSounds = false;

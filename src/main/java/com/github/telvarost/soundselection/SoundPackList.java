@@ -115,15 +115,16 @@ public class SoundPackList
             }
 
             titleAndAuthorMap.clear();
-            arraylist.add("Default");
-            titleAndAuthorMap.put("Default", new String[]{"Default", description});
+            arraylist.add("");
+            titleAndAuthorMap.put("", new String[]{"Default", description});
 
             File afile[] = soundPackDir.listFiles();
             for (int fileIndex = 0; fileIndex < afile.length; fileIndex++) {
                 if (afile[fileIndex].getName().contains(".zip")) {
                     description = ModHelper.readZip(Paths.get(soundPackDir.getPath(), afile[fileIndex].getName()).toString());
-                    arraylist.add("Pack" + fileIndex);
-                    titleAndAuthorMap.put("Pack" + fileIndex, new String[]{"Pack" + fileIndex, description});
+                    String fileName = afile[fileIndex].getName().substring(0, afile[fileIndex].getName().length() - 4);
+                    arraylist.add(fileName);
+                    titleAndAuthorMap.put(fileName, new String[]{fileName, description});
                 }
             }
         }

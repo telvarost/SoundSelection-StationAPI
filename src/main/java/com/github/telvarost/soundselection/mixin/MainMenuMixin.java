@@ -20,11 +20,6 @@ public class MainMenuMixin extends Screen {
 
     public MainMenuMixin() { }
 
-    @Inject(method = "init", at = @At("HEAD"), cancellable = true)
-    public void init_head(CallbackInfo ci) {
-        ModHelper.loadSoundPack();
-    }
-
     @Inject(method = "init", at = @At("RETURN"), cancellable = true)
     public void init_return(CallbackInfo ci) {
         int i = this.height / 4 + 48;
