@@ -49,7 +49,7 @@ public class GuiSoundPacks extends Screen {
                 e.printStackTrace();
             }
         } else if (guibutton.id == 6) {
-            //minecraft.textureManager.reloadTexturesFromTexturePack();
+            //minecraft.textureManager.method_1096();
             minecraft.setScreen(guiScreen);
         } else {
             guiSoundPackSlot.buttonClicked(guibutton);

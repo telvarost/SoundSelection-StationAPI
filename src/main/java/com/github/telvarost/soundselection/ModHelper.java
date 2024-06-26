@@ -17,7 +17,7 @@ public class ModHelper {
 
     private static boolean starting = true;
 
-    private static final String resourcesString = "resources-soundpack";
+    public static final String resourcesString = "resources-soundpack";
 
     public static void loadSoundPack() {
         ModHelperFields.reloadingSounds = true;
