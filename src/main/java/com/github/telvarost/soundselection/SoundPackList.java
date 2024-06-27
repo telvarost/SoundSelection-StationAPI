@@ -71,7 +71,7 @@ public class SoundPackList
                 ModHelper.ModHelperFields.reloadingSounds = true;
                 ModHelper.ModHelperFields.reloadingSounds = false;
             }
-            ModHelper.loadSoundPack();
+            ModHelper.loadSoundPack(true);
             mc.options.save();
             class_564 scaledresolution = new class_564(mc.options, mc.displayWidth, mc.displayHeight);
             int i = scaledresolution.method_1857();

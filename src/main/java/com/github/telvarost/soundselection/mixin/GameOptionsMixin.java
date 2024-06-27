@@ -18,7 +18,7 @@ public class GameOptionsMixin {
 
     @Inject(method = "save", at = @At("HEAD"), cancellable = true)
     protected void buttonClicked(CallbackInfo ci) {
-        ModHelper.loadSoundPack();
+        ModHelper.loadSoundPack(false);
     }
 
     @Redirect(

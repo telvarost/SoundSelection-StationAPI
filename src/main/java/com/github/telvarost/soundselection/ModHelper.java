@@ -19,9 +19,8 @@ public class ModHelper {
 
     public static final String resourcesString = "resources-soundpack";
 
-    public static void loadSoundPack() {
+    public static void loadSoundPack(boolean unzipPack) {
         ModHelperFields.reloadingSounds = true;
-
 
         System.out.println("Loading sound pack files...");
         File settings = new File("options.txt");
@@ -65,7 +64,11 @@ public class ModHelper {
         File soundPackDir = new File(Minecraft.getRunDirectory(), "soundpacks");
 
         File resourceSoundPackDir = new File(resourcesString);
-        deleteDirectory(resourceSoundPackDir);
+
+        if (unzipPack) {
+            deleteDirectory(resourceSoundPackDir);
+        }
+
         if (!resourceSoundPackDir.exists()) {
             resourceSoundPackDir.mkdirs();
         }
@@ -98,9 +101,11 @@ public class ModHelper {
 
         try {
             if (!ModHelperFields.soundPack.equals("")) {
-                unzip( Paths.get(soundPackDir.getPath(), ModHelperFields.soundPack + ".zip").toString()
-                     , Paths.get(Minecraft.getRunDirectory().getPath(), resourcesString).toString()
-                     );
+                if (unzipPack) {
+                    unzip( Paths.get(soundPackDir.getPath(), ModHelperFields.soundPack + ".zip").toString()
+                         , Paths.get(Minecraft.getRunDirectory().getPath(), resourcesString).toString()
+                    );
+                }
             }
         } catch (IOException ex) {
             System.out.println("Failed to copy sounds");
