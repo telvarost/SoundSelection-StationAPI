@@ -67,10 +67,10 @@ public class SoundPackList
         } else {
             selectedSoundPack = ModHelper.ModHelperFields.soundPack;
             ModHelper.ModHelperFields.soundPack = availableSoundPacks.get(k);
-            if (FabricLoader.getInstance().isModLoaded("stationapi")) {
-                ModHelper.ModHelperFields.reloadingSounds = true;
-                ModHelper.ModHelperFields.reloadingSounds = false;
-            }
+//            if (FabricLoader.getInstance().isModLoaded("stationapi")) {
+//                ModHelper.ModHelperFields.reloadingSounds = true;
+//                ModHelper.ModHelperFields.reloadingSounds = false;
+//            }
             ModHelper.loadSoundPack(true);
             mc.options.save();
             class_564 scaledresolution = new class_564(mc.options, mc.displayWidth, mc.displayHeight);
@@ -91,7 +91,7 @@ public class SoundPackList
 
         if (soundPackDir.exists() && soundPackDir.isDirectory()) {
 
-            String description = "";
+            String[] stringList = new String[]{"Default", ""};
 
             try {
                 JsonObject packObject = Jankson
@@ -99,12 +99,10 @@ public class SoundPackList
                         .build()
                         .load(new File("resources", "pack.mcmeta"));
 
-                System.out.println("Parsing");
                 if (null != packObject.getObject("pack")) {
                     JsonElement jsonElement = packObject.getObject("pack").getOrDefault("description", new JsonObject());
-                    System.out.println(jsonElement.toString());
                     if (2 <= jsonElement.toString().length()) {
-                        description = jsonElement.toString().substring(1, jsonElement.toString().length() - 1);
+                        stringList[1] = jsonElement.toString().substring(1, jsonElement.toString().length() - 1);
                     }
                 }
             } catch (IOException ex) {
@@ -116,15 +114,18 @@ public class SoundPackList
 
             titleAndAuthorMap.clear();
             arraylist.add("");
-            titleAndAuthorMap.put("", new String[]{"Default", description});
+            titleAndAuthorMap.put("", stringList);
 
             File afile[] = soundPackDir.listFiles();
             for (int fileIndex = 0; fileIndex < afile.length; fileIndex++) {
                 if (afile[fileIndex].getName().contains(".zip")) {
-                    description = ModHelper.readZip(Paths.get(soundPackDir.getPath(), afile[fileIndex].getName()).toString());
+                    stringList = ModHelper.readZip(Paths.get(soundPackDir.getPath(), afile[fileIndex].getName()).toString());
                     String fileName = afile[fileIndex].getName().substring(0, afile[fileIndex].getName().length() - 4);
                     arraylist.add(fileName);
-                    titleAndAuthorMap.put(fileName, new String[]{fileName, description});
+                    if (stringList[0].isBlank()) {
+                        stringList[0] = fileName;
+                    }
+                    titleAndAuthorMap.put(fileName, stringList);
                 }
             }
         }

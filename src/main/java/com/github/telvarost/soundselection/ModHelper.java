@@ -22,9 +22,9 @@ public class ModHelper {
     public static void loadSoundPack(boolean unzipPack) {
         ModHelperFields.reloadingSounds = true;
 
-        System.out.println("Loading sound pack files...");
         File settings = new File("options.txt");
         if(starting) {
+            System.out.println("Getting sound pack selection...");
             if(!settings.exists())
             {
                 if(ModHelperFields.soundPack == null || !ModHelper.ModHelperFields.soundPack.equals("")) {
@@ -37,7 +37,6 @@ public class ModHelper {
                     boolean closed = false;
                     for(String s = ""; (s = bufferedreader.readLine()) != null;)
                     {
-                        System.out.println(s);
                         String as[] = s.split(":");
                         if (1 < as.length) {
                             if(as[0].equals("soundPack"))
@@ -62,10 +61,10 @@ public class ModHelper {
         starting = false;
 
         File soundPackDir = new File(Minecraft.getRunDirectory(), "soundpacks");
-
         File resourceSoundPackDir = new File(resourcesString);
 
         if (unzipPack) {
+            System.out.println("Loading sound pack files...");
             deleteDirectory(resourceSoundPackDir);
         }
 
@@ -114,9 +113,8 @@ public class ModHelper {
         ModHelperFields.reloadingSounds = false;
     }
 
-    public static String readZip(String zipFilePath) {
-        String returnVal = "";
-        System.out.println("Hey whats the idea");
+    public static String[] readZip(String zipFilePath) {
+        String[] stringList = new String[2];
         try {
             ZipFile zipFile = new ZipFile(zipFilePath);
 
@@ -125,33 +123,24 @@ public class ModHelper {
             while (entries.hasMoreElements()) {
                 ZipEntry entry = entries.nextElement();
                 String name = entry.getName();
-                long compressedSize = entry.getCompressedSize();
-                long normalSize = entry.getSize();
+
                 if (!entry.isDirectory() && name.contains(".mcmeta")) {
-//                    try (;
-//                         Scanner scanner = new Scanner(inputStream);) {
-//
-//                        while (scanner.hasNextLine()) {
-//                            String line = scanner.nextLine();
-//                            System.out.println(line);
-//                        }
-//                    }
-                    System.out.println(name);
-                    System.out.format("\t %d - %d\n", compressedSize, normalSize);
-
-
                     try {
                         JsonObject packObject = Jankson
                                 .builder()
                                 .build()
                                 .load(zipFile.getInputStream(entry));
 
-                        System.out.println("Parsing");
                         if (null != packObject.getObject("pack")) {
-                            JsonElement jsonElement = packObject.getObject("pack").getOrDefault("description", new JsonObject());
-                            System.out.println(jsonElement.toString());
-                            if (2 <= jsonElement.toString().length()) {
-                                returnVal = jsonElement.toString().substring(1, jsonElement.toString().length() - 1);
+
+                            JsonElement jsonElementTitle = packObject.getObject("pack").getOrDefault("title", new JsonObject());
+                            if (2 <= jsonElementTitle.toString().length()) {
+                                stringList[0] = jsonElementTitle.toString().substring(1, jsonElementTitle.toString().length() - 1);
+                            }
+
+                            JsonElement jsonElementDescription = packObject.getObject("pack").getOrDefault("description", new JsonObject());
+                            if (2 <= jsonElementDescription.toString().length()) {
+                                stringList[1] = jsonElementDescription.toString().substring(1, jsonElementDescription.toString().length() - 1);
                             }
                         }
                     } catch (IOException ex) {
@@ -168,7 +157,7 @@ public class ModHelper {
             System.err.println(ex);
         }
 
-        return returnVal;
+        return stringList;
     }
 
     private static boolean deleteDirectory(File directoryToBeDeleted) {

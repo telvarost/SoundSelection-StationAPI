@@ -76,7 +76,7 @@ public class GuiSoundPacks extends Screen {
         String subtitle = translationStorage.get("soundPack.subtitle");
         drawCenteredTextWithShadow(textRenderer,
                 (subtitle.equals("soundPack.subtitle")) ? "Restart required for changes to take effect" : subtitle,
-                width / 2, 22, 0x808080);
+                width / 2, 21, 0x808080);
         String folderInfo = translationStorage.get("soundPack.folderInfo");
         drawCenteredTextWithShadow(textRenderer,
                 (folderInfo.equals("soundPack.folderInfo")) ? "(Place sound pack files here)" : folderInfo,
