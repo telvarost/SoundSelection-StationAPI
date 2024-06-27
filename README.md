@@ -2,7 +2,7 @@
 
 A StationAPI mod for Minecraft Beta 1.7.3 that adds custom sound loading capabilities to the game similar to texture packs. Special thanks to Spring Spring for the sound icon and to NFC team for the pack list GUI.
 
-# Quick Additions
+# Sound Selection
 Mod works on Multiplayer as it is completely clientside!
 
 * Adds ability to add sound packs to the game.
