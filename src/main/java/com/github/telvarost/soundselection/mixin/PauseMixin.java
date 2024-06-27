@@ -24,7 +24,7 @@ public class PauseMixin extends Screen {
     public void init_return(CallbackInfo ci) {
         byte byte0 = -16;
         if (!FabricLoader.getInstance().isModLoaded("modmenu") && !FabricLoader.getInstance().isModLoaded("legacytranslations")) {
-            buttons.add(new ButtonWidget(7, width / 2 - 100, height / 4 + 72 + byte0, 200, 20, I18n.getTranslation(("menu.texturepacks"))));
+            buttons.add(new ButtonWidget(7, width / 2 - 100, height / 4 + 72 + byte0, 200, 20, I18n.getTranslation(("menu.mods"))));
         }
         buttons.add(new GuiButtonCustom(8, width / 2 - 124, height / 4 + 72 + byte0, 20, 20, "", true, 2));
     }

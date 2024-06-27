@@ -32,12 +32,12 @@ public class MinecraftMixin {
     public void loadSoundFromDirSound(String path, File file, CallbackInfo ci) {
         if (!ModHelper.ModHelperFields.soundPack.isBlank()) {
             File soundFile = new File(Paths.get(Minecraft.getRunDirectory().getPath(), ModHelper.resourcesString, "sound", path).toString());
-            //System.out.println("Removing sound: " + soundFile);
             if (soundFile.exists()) {
-                soundManager.loadStreaming(path, soundFile);
+                //System.out.println("Adding sound: " + soundFile);
                 //System.out.println("Loaded: " + path);
+                soundManager.loadSound(path, soundFile);
+                ci.cancel();
             }
-            ci.cancel();
         }
     }
 
@@ -53,12 +53,12 @@ public class MinecraftMixin {
     public void loadSoundFromDirNewSound(String path, File file, CallbackInfo ci) {
         if (!ModHelper.ModHelperFields.soundPack.isBlank()) {
             File soundFile = new File(Paths.get(Minecraft.getRunDirectory().getPath(), ModHelper.resourcesString, "newsound", path).toString());
-            //System.out.println("Removing sound: " + soundFile);
             if (soundFile.exists()) {
-                soundManager.loadStreaming(path, soundFile);
+                //System.out.println("Adding sound: " + soundFile);
                 //System.out.println("Loaded: " + path);
+                soundManager.loadSound(path, soundFile);
+                ci.cancel();
             }
-            ci.cancel();
         }
     }
 
@@ -73,12 +73,12 @@ public class MinecraftMixin {
     public void loadSoundFromDirStreaming(String path, File file, CallbackInfo ci) {
         if (!ModHelper.ModHelperFields.soundPack.isBlank()) {
             File streamingFile = new File(Paths.get(Minecraft.getRunDirectory().getPath(), ModHelper.resourcesString, "streaming", path).toString());
-            //System.out.println("Removing streaming sound: " + streamingFile);
             if (streamingFile.exists()) {
-                soundManager.loadStreaming(path, streamingFile);
+                //System.out.println("Adding streaming: " + streamingFile);
                 //System.out.println("Loaded: " + path);
+                soundManager.loadStreaming(path, streamingFile);
+                ci.cancel();
             }
-            ci.cancel();
         }
     }
 
@@ -94,12 +94,12 @@ public class MinecraftMixin {
     public void loadSoundFromDirMusic(String path, File file, CallbackInfo ci) {
         if (!ModHelper.ModHelperFields.soundPack.isBlank()) {
             File musicFile = new File(Paths.get(Minecraft.getRunDirectory().getPath(), ModHelper.resourcesString, "music", path).toString());
-            //System.out.println("Removing music: " + musicFile);
             if (musicFile.exists()) {
-                soundManager.loadStreaming(path, musicFile);
+                //System.out.println("Adding music: " + musicFile);
                 //System.out.println("Loaded: " + path);
+                soundManager.loadMusic(path, musicFile);
+                ci.cancel();
             }
-            ci.cancel();
         }
     }
 
@@ -115,12 +115,12 @@ public class MinecraftMixin {
     public void loadSoundFromDirNewMusic(String path, File file, CallbackInfo ci) {
         if (!ModHelper.ModHelperFields.soundPack.isBlank()) {
             File musicFile = new File(Paths.get(Minecraft.getRunDirectory().getPath(), ModHelper.resourcesString, "newmusic", path).toString());
-            //System.out.println("Removing music: " + musicFile);
             if (musicFile.exists()) {
-                soundManager.loadStreaming(path, musicFile);
+                //System.out.println("Adding music: " + musicFile);
                 //System.out.println("Loaded: " + path);
+                soundManager.loadMusic(path, musicFile);
+                ci.cancel();
             }
-            ci.cancel();
         }
     }
 }
