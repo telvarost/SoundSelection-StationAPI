@@ -11,8 +11,7 @@
     "GameOptionsMixin",
     "MainMenuMixin",
     "MinecraftMixin",
-    "PauseMixin",
-    "SoundHelperMixin"
+    "PauseMixin"
   ],
   "injectors": {
     "defaultRequire": 1
