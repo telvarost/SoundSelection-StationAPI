@@ -1,6 +1,18 @@
 # SoundSelection for Minecraft Beta 1.7.3
 
-### In Progress
+A StationAPI mod for Minecraft Beta 1.7.3 that adds custom sound loading capabilities to the game similar to texture packs. Special thanks to Spring Spring for the sound icon and to NFC team for the pack list GUI.
+
+# Quick Additions
+Mod works on Multiplayer as it is completely clientside!
+
+* Adds ability to add sound packs to the game.
+  * On first run of the mod a folder named `soundpacks` will be created.
+  * To make a sound pack copy the structure of the `resources` folder and edit whatever you want, once finished zip the pack and remove sounds you did not change.
+  * Default Minecraft sounds will be used if a sound is not found in the sound pack.
+  * `pack.mcmeta` is used to get the pack `description` and `title`, if no title is provided the zip name will be used as the title.
+  * When the mod is run, click the sound icon to go to the sound pack selection screen.
+  * The sounds will be extracted to `resources-soundpack` when a sound pack is selected.
+  * Unfortunately after you select your desired sound pack you must restart the game for the new sounds to load.
 
 ## Installation using Prism Launcher
 
