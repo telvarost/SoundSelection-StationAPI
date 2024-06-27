@@ -6,11 +6,7 @@
   "name": "SoundSelection",
   "description": "This mod adds custom sound loading capabilities to the game. Special thanks to Spring Spring for the sound icon and to NFC team for the pack list GUI.",
   "authors": [
-    "Telvarost",
-    "Vivian",
-    "Birevan",
-    "Roadhog360",
-    "icanttellyou"
+    "Telvarost"
   ],
   "contact": {
     "issues": "https://github.com/telvarost/SoundSelection-StationAPI/issues",
