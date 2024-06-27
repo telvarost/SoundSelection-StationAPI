@@ -26,11 +26,13 @@ public class GuiSoundPacks extends Screen {
     }
 
     public void init() {
-        TranslationStorage stringtranslate = TranslationStorage.getInstance();
+        TranslationStorage translationStorage = TranslationStorage.getInstance();
+        String openFolder = translationStorage.get("soundPack.openFolder");
         buttons.add(new OptionButtonWidget(5, width / 2 - 154, height - 48,
-                stringtranslate.get("soundPack.openFolder")));
+                (openFolder.equals("soundPack.openFolder")) ? "Open sound pack folder" : openFolder
+                ));
         buttons.add(new OptionButtonWidget(6, width / 2 + 4, height - 48,
-                stringtranslate.get("gui.done")));
+                translationStorage.get("gui.done")));
         packlist = new SoundPackList(minecraft, Minecraft.getRunDirectory());
         packlist.updateAvailableSoundPacks();
         guiSoundPackSlot = new GuiSoundPackSlot(this);
@@ -67,11 +69,17 @@ public class GuiSoundPacks extends Screen {
     public void render(int i, int j, float f) {
         guiSoundPackSlot.render(i, j, f);
         TranslationStorage translationStorage = TranslationStorage.getInstance();
+        String title = translationStorage.get("soundPack.title");
         drawCenteredTextWithShadow(textRenderer,
-                translationStorage.get("soundPack.title"), width / 2,
-                16, 0xffffff);
+                (title.equals("soundPack.title")) ? "Select Sound Pack" : title,
+                width / 2, 10, 0xffffff);
+        String subtitle = translationStorage.get("soundPack.subtitle");
         drawCenteredTextWithShadow(textRenderer,
-                translationStorage.get("soundPack.folderInfo"),
+                (subtitle.equals("soundPack.subtitle")) ? "Restart required for changes to take effect" : subtitle,
+                width / 2, 22, 0x808080);
+        String folderInfo = translationStorage.get("soundPack.folderInfo");
+        drawCenteredTextWithShadow(textRenderer,
+                (folderInfo.equals("soundPack.folderInfo")) ? "(Place sound pack files here)" : folderInfo,
                 width / 2 - 77, height - 26, 0x808080);
         super.render(i, j, f);
 //		guiTexturePackSlot.registerScrollButtons(controlList, 7, 8);
