@@ -23,12 +23,12 @@ public class MainMenuMixin extends Screen {
     @Inject(method = "init", at = @At("RETURN"), cancellable = true)
     public void init_return(CallbackInfo ci) {
         int i = this.height / 4 + 48;
-        buttons.add(new GuiButtonCustom(5, width / 2 - 124, i + 48, 20, 20, I18n.getTranslation(""), true, 2));
+        buttons.add(new GuiButtonCustom(49, width / 2 - 124, i + 48, 20, 20, I18n.getTranslation(""), true, 2));
     }
 
     @Inject(method = "buttonClicked", at = @At("RETURN"), cancellable = true)
     protected void buttonClicked(ButtonWidget arg, CallbackInfo ci) {
-        if (arg.id == 5)
+        if (arg.id == 49)
         {
             this.minecraft.setScreen(new GuiSoundPacks(this));
         }

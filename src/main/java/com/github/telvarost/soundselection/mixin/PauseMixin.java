@@ -26,7 +26,7 @@ public class PauseMixin extends Screen {
         if (!FabricLoader.getInstance().isModLoaded("modmenu") && !FabricLoader.getInstance().isModLoaded("legacytranslations")) {
             buttons.add(new ButtonWidget(7, width / 2 - 100, height / 4 + 72 + byte0, 200, 20, I18n.getTranslation(("menu.mods"))));
         }
-        buttons.add(new GuiButtonCustom(8, width / 2 - 124, height / 4 + 72 + byte0, 20, 20, "", true, 2));
+        buttons.add(new GuiButtonCustom(48, width / 2 - 124, height / 4 + 72 + byte0, 20, 20, "", true, 2));
     }
 
     @Inject(method = "buttonClicked", at = @At("RETURN"), cancellable = true)
@@ -37,7 +37,7 @@ public class PauseMixin extends Screen {
             }
         }
 
-        if (arg.id == 8) {
+        if (arg.id == 48) {
             this.minecraft.setScreen(new GuiSoundPacks(this));
         }
     }
