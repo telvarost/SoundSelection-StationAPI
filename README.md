@@ -8,6 +8,7 @@ Mod works on Multiplayer as it is completely clientside!
 * Adds ability to add sound packs to the game.
   * On first run of the mod a folder named `soundpacks` will be created.
   * To make a sound pack copy the structure of the `resources` folder and edit whatever you want, once finished zip the pack and remove sounds you did not change.
+    * Example: [https://github.com/telvarost/SoundSelection-StationAPI/tree/main/example]
   * Default Minecraft sounds will be used if a sound is not found in the sound pack.
   * `pack.mcmeta` is used to get the pack `description` and `title`, if no title is provided the zip name will be used as the title.
   * When the mod is run, click the sound icon to go to the sound pack selection screen.
@@ -18,9 +19,9 @@ Mod works on Multiplayer as it is completely clientside!
 
 1. Download an instance of Babric for Prism Launcher: https://github.com/babric/prism-instance
 2. Install Java 17, set the instance to use it, and disable compatibility checks on the instance: https://adoptium.net/temurin/releases/
-3. Add StationAPI to the mod folder for the instance: https://jenkins.glass-launcher.net/job/StationAPI/lastSuccessfulBuild/
-4. (Optional) Add Mod Menu to the mod folder for the instance: https://github.com/calmilamsy/ModMenu/releases
-5. (Optional) Add GlassConfigAPI 2.0+ to the mod folder for the instance: https://maven.glass-launcher.net/#/releases/net/glasslauncher/mods/GlassConfigAPI
+3. (Optional) Add StationAPI to the mod folder for the instance: https://modrinth.com/mod/stationapi
+4. (Optional) Add Mod Menu to the mod folder for the instance: https://modrinth.com/mod/modmenu-beta
+5. (Optional) Add GlassConfigAPI 2.0+ to the mod folder for the instance: https://modrinth.com/mod/glass-config-api
 6. Add this mod to the mod folder for the instance: https://github.com/telvarost/SoundSelection-StationAPI/releases
 7. Add desired sound packs to your soundpacks folder after running the mod once.
 8. Enjoy! 👍
