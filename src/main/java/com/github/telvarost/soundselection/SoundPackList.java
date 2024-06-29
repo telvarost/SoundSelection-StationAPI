@@ -14,7 +14,6 @@ import blue.endless.jankson.Jankson;
 import blue.endless.jankson.JsonElement;
 import blue.endless.jankson.JsonObject;
 import blue.endless.jankson.api.SyntaxError;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.class_564;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
@@ -71,7 +70,7 @@ public class SoundPackList
 //                ModHelper.ModHelperFields.reloadingSounds = true;
 //                ModHelper.ModHelperFields.reloadingSounds = false;
 //            }
-            ModHelper.loadSoundPack(true);
+            ModHelper.loadSoundPack(false);
             mc.options.save();
             class_564 scaledresolution = new class_564(mc.options, mc.displayWidth, mc.displayHeight);
             int i = scaledresolution.method_1857();
