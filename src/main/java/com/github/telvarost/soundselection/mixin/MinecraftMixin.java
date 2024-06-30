@@ -36,47 +36,51 @@ public class MinecraftMixin {
             cancellable = true
     )
     public void soundSelection_loadResource(String path, File file, CallbackInfo ci) {
-       if (starting) {
-           starting = false;
+        if (starting) {
+            starting = false;
 
-           try {
-               File packResourcesDir = new File(Minecraft.getRunDirectory(), ModHelper.resourcesString);
-               File soundPackDir = new File(Minecraft.getRunDirectory(), "soundpacks");
-               File selectedSoundData = new File(Paths.get(packResourcesDir.getPath(), ModHelper.ModHelperFields.soundPack + ".dat").toString());
-
-               /** - Read sound pack data if file exists */
-               Instant instant = Instant.MIN;
-               if (selectedSoundData.exists()) {
-                   Scanner myReader = new Scanner(selectedSoundData);
-                   while (myReader.hasNextLine()) {
-                       String data = myReader.nextLine();
-                       instant = Instant.parse(data);
-                       break;
-                   }
-                   myReader.close();
-               }
-               FileTime fileTime = FileTime.from(instant);
-
-               /** - Compare stored sound pack data with sound pack in soundpacks folder */
-               BasicFileAttributes attr = Files.readAttributes(Paths.get(soundPackDir.getPath(), ModHelper.ModHelperFields.soundPack + ".zip"), BasicFileAttributes.class);
-               if (!selectedSoundData.exists() || (0 != attr.lastModifiedTime().compareTo(fileTime))) {
-                   /** - Load sound pack */
-                   ModHelper.loadSoundPack(true);
-
-                    /** - Store some data about loaded sound pack */
-                   selectedSoundData.createNewFile();
-                   FileWriter myWriter = new FileWriter(selectedSoundData);
-                   myWriter.write(attr.lastModifiedTime().toString());
-                   myWriter.close();
-               }
-           } catch (IOException ioException) {
-               /** - An error occured use default Minecraft sounds instead */
-               ModHelper.ModHelperFields.soundPack = "";
+            if (ModHelper.ModHelperFields.soundPack.isBlank()) {
                ModHelper.loadSoundPack(true);
-               System.out.println("An error occurred when trying to load selected sound pack. Switching to Minecraft default sounds.");
-               ioException.printStackTrace();
-           }
-       }
+            } else {
+                try {
+                    File packResourcesDir = new File(Minecraft.getRunDirectory(), ModHelper.resourcesString);
+                    File soundPackDir = new File(Minecraft.getRunDirectory(), "soundpacks");
+                    File selectedSoundData = new File(Paths.get(packResourcesDir.getPath(), ModHelper.ModHelperFields.soundPack + ".dat").toString());
+
+                    /** - Read sound pack data if file exists */
+                    Instant instant = Instant.MIN;
+                    if (selectedSoundData.exists()) {
+                        Scanner myReader = new Scanner(selectedSoundData);
+                        while (myReader.hasNextLine()) {
+                            String data = myReader.nextLine();
+                            instant = Instant.parse(data);
+                            break;
+                        }
+                        myReader.close();
+                    }
+                    FileTime fileTime = FileTime.from(instant);
+
+                    /** - Compare stored sound pack data with sound pack in soundpacks folder */
+                    BasicFileAttributes attr = Files.readAttributes(Paths.get(soundPackDir.getPath(), ModHelper.ModHelperFields.soundPack + ".zip"), BasicFileAttributes.class);
+                    if (!selectedSoundData.exists() || (0 != attr.lastModifiedTime().compareTo(fileTime))) {
+                        /** - Load sound pack */
+                        ModHelper.loadSoundPack(true);
+
+                        /** - Store some data about loaded sound pack */
+                        selectedSoundData.createNewFile();
+                        FileWriter myWriter = new FileWriter(selectedSoundData);
+                        myWriter.write(attr.lastModifiedTime().toString());
+                        myWriter.close();
+                    }
+                } catch (IOException ioException) {
+                    /** - An error occured use default Minecraft sounds instead */
+                    ModHelper.ModHelperFields.soundPack = "";
+                    ModHelper.loadSoundPack(true);
+                    System.out.println("An error occurred when trying to load selected sound pack. Switching to Minecraft default sounds.");
+                    ioException.printStackTrace();
+                }
+            }
+        }
     }
 
     @Inject(
