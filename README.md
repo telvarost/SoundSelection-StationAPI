@@ -21,7 +21,7 @@ Mod works on Multiplayer as it is completely clientside!
 
 1. Download an instance of Babric for Prism Launcher: https://github.com/Glass-Series/babric-prism-instance
 2. Install Java 17 and set the instance to use it: https://adoptium.net/temurin/releases/
-3. Add CryonicConfig to the mod folder for the instance: https://modrinth.com/mod/cryonicconfig
+3. (Optional) Add CryonicConfig to the mod folder for the instance: https://modrinth.com/mod/cryonicconfig
 4. (Optional) Add StationAPI to the mod folder for the instance: https://modrinth.com/mod/stationapi
 5. (Optional) Add Mod Menu to the mod folder for the instance: https://modrinth.com/mod/modmenu-beta
 6. Add this mod to the mod folder for the instance: https://github.com/telvarost/BetaTweaks-StationAPI/releases
