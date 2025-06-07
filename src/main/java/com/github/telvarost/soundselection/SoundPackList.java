@@ -14,9 +14,9 @@ import blue.endless.jankson.Jankson;
 import blue.endless.jankson.JsonElement;
 import blue.endless.jankson.JsonObject;
 import blue.endless.jankson.api.SyntaxError;
-import net.minecraft.class_564;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.util.ScreenScaler;
 
 public class SoundPackList
 {
@@ -72,9 +72,9 @@ public class SoundPackList
 //            }
             ModHelper.loadSoundPack(false);
             mc.options.save();
-            class_564 scaledresolution = new class_564(mc.options, mc.displayWidth, mc.displayHeight);
-            int i = scaledresolution.method_1857();
-            int j = scaledresolution.method_1858();
+            ScreenScaler scaledresolution = new ScreenScaler(mc.options, mc.displayWidth, mc.displayHeight);
+            int i = scaledresolution.getScaledWidth();
+            int j = scaledresolution.getScaledHeight();
             screen.init(mc, i, j);
             return true;
         }

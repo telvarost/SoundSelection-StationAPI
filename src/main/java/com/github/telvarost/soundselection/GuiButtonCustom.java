@@ -45,7 +45,7 @@ public class GuiButtonCustom extends ButtonWidget {
         TextRenderer fontrenderer = minecraft.textRenderer;
         boolean flag = i >= x && j >= y
                 && i < x + width && j < y + height;
-        int k = method_1187(flag);
+        int k = getYImage(flag);
         if(enableBg) {
             GL11.glBindTexture(3553 /* GL_TEXTURE_2D */,
                     minecraft.textureManager.getTextureId("/gui/gui.png"));
