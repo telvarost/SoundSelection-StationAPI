@@ -2,6 +2,7 @@ package com.github.telvarost.soundselection.mixin;
 
 import com.github.telvarost.soundselection.GuiButtonCustom;
 import com.github.telvarost.soundselection.GuiSoundPacks;
+import com.github.telvarost.soundselection.ModHelper;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.loader.api.FabricLoader;
@@ -23,10 +24,14 @@ public class PauseMixin extends Screen {
     @Inject(method = "init", at = @At("RETURN"), cancellable = true)
     public void init_return(CallbackInfo ci) {
         byte byte0 = -16;
+
         if (!FabricLoader.getInstance().isModLoaded("modmenu") && !FabricLoader.getInstance().isModLoaded("legacytranslations")) {
             buttons.add(new ButtonWidget(7, width / 2 - 100, height / 4 + 72 + byte0, 200, 20, I18n.getTranslation(("menu.mods"))));
         }
-        buttons.add(new GuiButtonCustom(48, width / 2 - 124, height / 4 + 72 + byte0, 20, 20, "", true, 2));
+
+        if (ModHelper.ModHelperFields.displayGui) {
+            buttons.add(new GuiButtonCustom(48, width / 2 - 124, height / 4 + 72 + byte0, 20, 20, "", true, 2));
+        }
     }
 
     @Inject(method = "buttonClicked", at = @At("RETURN"), cancellable = true)
@@ -37,8 +42,10 @@ public class PauseMixin extends Screen {
             }
         }
 
-        if (arg.id == 48) {
-            this.minecraft.setScreen(new GuiSoundPacks(this));
+        if (ModHelper.ModHelperFields.displayGui) {
+            if (arg.id == 48) {
+                this.minecraft.setScreen(new GuiSoundPacks(this));
+            }
         }
     }
 }

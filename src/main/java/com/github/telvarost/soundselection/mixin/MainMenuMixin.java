@@ -3,8 +3,10 @@ package com.github.telvarost.soundselection.mixin;
 import com.github.telvarost.soundselection.GuiButtonCustom;
 import com.github.telvarost.soundselection.GuiSoundPacks;
 import com.github.telvarost.soundselection.ModHelper;
+import com.github.telvarost.soundselection.ModHelperCryonicConfig;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.TitleScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
@@ -23,14 +25,24 @@ public class MainMenuMixin extends Screen {
     @Inject(method = "init", at = @At("RETURN"), cancellable = true)
     public void init_return(CallbackInfo ci) {
         int i = this.height / 4 + 48;
-        buttons.add(new GuiButtonCustom(49, width / 2 - 124, i + 48, 20, 20, I18n.getTranslation(""), true, 2));
+
+        if (FabricLoader.getInstance().isModLoaded("cryonicconfig")) {
+            ModHelper.ModHelperFields.displayGui = ModHelperCryonicConfig.loadDisplayGui();
+        } else {
+            ModHelper.ModHelperFields.displayGui = true;
+        }
+
+        if (ModHelper.ModHelperFields.displayGui) {
+            buttons.add(new GuiButtonCustom(49, width / 2 - 124, i + 48, 20, 20, I18n.getTranslation(""), true, 2));
+        }
     }
 
     @Inject(method = "buttonClicked", at = @At("RETURN"), cancellable = true)
     protected void buttonClicked(ButtonWidget arg, CallbackInfo ci) {
-        if (arg.id == 49)
-        {
-            this.minecraft.setScreen(new GuiSoundPacks(this));
+        if (ModHelper.ModHelperFields.displayGui) {
+            if (arg.id == 49) {
+                this.minecraft.setScreen(new GuiSoundPacks(this));
+            }
         }
     }
 }

@@ -5,6 +5,8 @@ A babric mod for Minecraft Beta 1.7.3 that adds custom sound loading capabilitie
 # Sound Selection
 Mod works on Multiplayer as it is completely clientside!
 
+* GUI icon can be disabled using [CryonicConfig](https://modrinth.com/mod/cryonicconfig).
+  * After loading the mod and selecting your desired soundpack, go to the config folder and change `displayGUI` in the `soundselection.json` file to `false`
 * Adds ability to add sound packs to the game.
   * On first run of the mod a folder named `soundpacks` will be created.
   * To make a sound pack copy the structure of the `resources` folder and edit whatever you want, once finished zip the pack and remove sounds you did not change.
@@ -19,12 +21,11 @@ Mod works on Multiplayer as it is completely clientside!
 
 1. Download an instance of Babric for Prism Launcher: https://github.com/Glass-Series/babric-prism-instance
 2. Install Java 17 and set the instance to use it: https://adoptium.net/temurin/releases/
-3. Add StationAPI to the mod folder for the instance: https://modrinth.com/mod/stationapi
-4. Add Mod Menu to the mod folder for the instance: https://modrinth.com/mod/modmenu-beta
-5. Add GlassConfigAPI 3.0.1+ to the mod folder for the instance: https://modrinth.com/mod/glass-config-api
-6. Add this mod to the mod folder for the instance: https://github.com/telvarost/SoundSelection-StationAPI/releases
-7. Add desired sound packs to your soundpacks folder after running the mod once.
-8. Enjoy! 👍
+3. Add CryonicConfig to the mod folder for the instance: https://modrinth.com/mod/cryonicconfig
+4. (Optional) Add StationAPI to the mod folder for the instance: https://modrinth.com/mod/stationapi
+5. (Optional) Add Mod Menu to the mod folder for the instance: https://modrinth.com/mod/modmenu-beta
+6. Add this mod to the mod folder for the instance: https://github.com/telvarost/BetaTweaks-StationAPI/releases
+7. Run and enjoy! 👍
 
 ## Feedback
 

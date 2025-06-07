@@ -16,8 +16,8 @@ import java.util.zip.ZipInputStream;
 public class ModHelper {
 
     private static boolean starting = true;
-
     public static final String resourcesString = "resources-soundpack";
+    public static final String MOD_ID = "soundselection";
 
     public static void loadSoundPack(boolean unzipPack) {
         ModHelperFields.reloadingSounds = true;
@@ -196,5 +196,6 @@ public class ModHelper {
     public static class ModHelperFields {
         public static String soundPack = "";
         public static Boolean reloadingSounds = true;
+        public static Boolean displayGui = true;
     }
 }
