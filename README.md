@@ -6,7 +6,7 @@ A babric mod for Minecraft Beta 1.7.3 that adds custom sound loading capabilitie
 Mod works on Multiplayer as it is completely clientside!
 
 * GUI icon can be disabled using [CryonicConfig](https://modrinth.com/mod/cryonicconfig).
-  * After loading the mod and selecting your desired soundpack, go to the config folder and change `displayGUI` in the `soundselection.json` file to `false`
+  * After loading the mod and selecting your desired soundpack, go to the config folder and change `displayGUI` in the `soundselection.json` file to `false`.
 * Adds ability to add sound packs to the game.
   * On first run of the mod a folder named `soundpacks` will be created.
   * To make a sound pack copy the structure of the `resources` folder and edit whatever you want, once finished zip the pack and remove sounds you did not change.
